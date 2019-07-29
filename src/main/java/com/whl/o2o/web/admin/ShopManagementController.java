@@ -1,12 +1,15 @@
 package com.whl.o2o.web.admin;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whl.o2o.dto.ShopExecution;
+import com.whl.o2o.entity.Area;
 import com.whl.o2o.entity.Shop;
+import com.whl.o2o.entity.ShopCategory;
 import com.whl.o2o.entity.UserInfo;
 import com.whl.o2o.enums.ShopStateEnum;
+import com.whl.o2o.service.AreaService;
+import com.whl.o2o.service.ShopCategoryService;
 import com.whl.o2o.service.ShopService;
 import com.whl.o2o.util.HttpServletRequestUtil;
 import com.whl.o2o.util.ImageUtil;
@@ -21,9 +24,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,57 +42,103 @@ public class ShopManagementController {
     @Autowired
     private ShopService shopService;
 
+    @Autowired
+    private ShopCategoryService shopCategoryService;
 
-//    @RequestMapping(value = "/registershop",method = RequestMethod.POST)
-//    @ResponseBody
-//    private Map<String,Object> registerShop(HttpServletRequest request){
-//        //1.接受并转化相应的参数
-//        Map<String,Object> modelMap = new HashMap<String, Object>();
-//        String shopStr = HttpServletRequestUtil.getString(request,"shopStr");
-//        ObjectMapper mapper = new ObjectMapper();
-//        Shop shop = null;
-//        try {
-//            shop = mapper.readValue(shopStr, Shop.class);
-//        } catch (Exception e){
-//            modelMap.put("success",false);
-//            modelMap.put("errMsg",e.getMessage());
-//            return modelMap;
-//        }
-//        CommonsMultipartFile shopImg = null;
-//        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-//        if(commonsMultipartResolver.isMultipart(request)){
-//            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-//            shopImg = (CommonsMultipartFile)multipartHttpServletRequest.getFile("shopImg");
-//        }else {
-//            modelMap.put("success",false);
-//            modelMap.put("errMsg","上传图片不能为空");
-//            return modelMap;
-//        }
-//        //2.注册店铺
-//        if(shop != null && shopImg !=null){
-//            UserInfo owner = new UserInfo();
-//            owner.setUserId(1L);
-//            shop.setUserInfo(owner);
-//            File shopImgFile = new File(PathUtil.getImageBasePath()+ ImageUtil.getRandomFileName());
-//            ShopExecution shopExecution = shopService.addShop(shop,shopImgFile);
-//            if(shopExecution.getState()== ShopStateEnum.CHECK.getState()){
-//                modelMap.put("success",true);
-//            }else {
-//                modelMap.put("success",false);
-//                modelMap.put("errMsg",shopExecution.getStateInfo());
-//                return modelMap;
-//            }
-//        }else {
-//            modelMap.put("success",false);
-//            modelMap.put("errMsg","请输入店铺信息");
-//            return modelMap;
-//        }
-//        //3.返回结果
-//    }
+    @Autowired
+    private AreaService areaService;
 
+    /**
+     * 获取shop的初始化信息
+     * @return
+     */
+    @RequestMapping(value = "/getshopinitinfo",method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String,Object> getShopInitInfo(){
+        Map<String,Object> modelMap = new HashMap<>();
+        List<ShopCategory> shopCategoryList = new ArrayList<>();
+        List<Area> areaList = new ArrayList<>();
+        try {
+            shopCategoryList = shopCategoryService.getShopCategoryList(new ShopCategory());
+            areaList = areaService.getAreaList();
+            modelMap.put("shopCategoryList",shopCategoryList);
+            modelMap.put("areaList",areaList);
+            modelMap.put("success",true);
+        }catch (Exception e){
+            modelMap.put("success",false);
+            modelMap.put("errMsg",e.getMessage());
+        }
+        return modelMap;
+    }
 
+    /**
+     * 店铺注册
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/registershop",method = RequestMethod.POST)
+    @ResponseBody//可
+    //从前端通过客户端请求获取request对象，map用于存储前端获取的数据中的键值对结果
+    private Map<String,Object> registerShop(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        //1.接受并转化相应的参数
+        String shopStr = HttpServletRequestUtil.getString(request,"shopStr");//获取key为shopStr的value并转换为String
+        ObjectMapper mapper = new ObjectMapper();
+        Shop shop = null;
+        try {
+            //将前端获取的信息转化为Shop实体类
+            shop = mapper.readValue(shopStr,Shop.class);
+        } catch (Exception e){
+            modelMap.put("success",false);
+            modelMap.put("errMsg",e.getMessage());
+            return modelMap;//若转换出现异常则返回一个附带错误信息的map对象
+        }
+        //采用cmp接收图片信息
+        CommonsMultipartFile shopImg = null;
+        //解析
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if(commonsMultipartResolver.isMultipart(request)){
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            shopImg = (CommonsMultipartFile)multipartHttpServletRequest.getFile("shopImg");
+        }else {
+            modelMap.put("success",false);
+            modelMap.put("errMsg","上传图片不能为空");
+            return modelMap;
+        }
+        //2.注册店铺
+        if(shop != null && shopImg !=null){
+            //可以通过session获取user信息
+            UserInfo owner = new UserInfo();
+            owner.setUserId(1L);
+            shop.setUserInfo(owner);
+
+            ShopExecution shopExecution = null;//将shop实体类对象和img交给service处理并返回一个执行结果
+            try {
+                shopExecution = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
+                if(shopExecution.getState()== ShopStateEnum.CHECK.getState()){//创建成功
+                    modelMap.put("success",true);
+                }else {
+                    modelMap.put("success",false);
+                    modelMap.put("errMsg",shopExecution.getStateInfo());//如果出错返回对应的执行状态
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return modelMap;
+        }else {
+            modelMap.put("success",false);
+            modelMap.put("errMsg","请输入店铺信息");
+            return modelMap;
+        }
+    }
+
+    /**
+     * 将inputStream类型转换为file类型
+     * @param is
+     * @param file
+     */
 //    private static void inputStreamToFile(InputStream is, File file){
-//        OutputStream os = null;
+//        FileOutputStream os = null;
 //        try {
 //            os = new FileOutputStream(file);
 //            int bytes = 0;

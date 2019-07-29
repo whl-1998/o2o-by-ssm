@@ -9,6 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -47,9 +48,9 @@ public class ImageUtil {
      * @param targetAddr 处理后的图片存储路径
      * @return
      */
-    public static String generateThumbnail(File thumbnailInputStream, String targetAddr){
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName,String targetAddr){
         String realFileName = getRandomFileName();//随机生成的文件名
-        String extension = getFileExtension(thumbnailInputStream);//获取传入文件的扩展名
+        String extension = getFileExtension(fileName);//获取传入文件的扩展名
         makeDirPath(targetAddr);//创建目标路径文件夹
         String relativeAddr = targetAddr+realFileName+extension;//拼接目标路径+文件名
         logger.debug("current relativeAddr is:"+relativeAddr);//打印相对路径
@@ -81,12 +82,11 @@ public class ImageUtil {
 
     /**
      * 获取输入文件流的扩展名
-     * @param thumbnailInputStream
+     * @param fileName
      * @return
      */
-    private static String getFileExtension(File thumbnailInputStream) {
-        String originalFileName = thumbnailInputStream.getName();//获取输入文件流的名称字符
-        return originalFileName.substring(originalFileName.lastIndexOf("."));//获取格式后缀
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));//获取格式后缀
     }
 
     /**
