@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whl.o2o.dao.ShopCategoryDao">
+    <select id="queryShopCategory" resultType="com.whl.o2o.entity.ShopCategory">
+      select
+      shop_category_id,
+      shop_category_name,
+      shop_category_desc,
+      shop_category_img,
+      priority,
+      create_time,
+      update_time,
+      parent_id
+      from tb_shop_category
+      <where>
+          <!--
+          要求所有店铺保存在二级类别下,一级类别进行分类,所以二级类别的parentId是非空的,这里进行判断
+          <if test="shopCategoryCondition != null">
+              and parent_id is not null;
+          </if>
+          -->
+          <!-- 如果传入的shopCategoryCondition的parent不为空,就select该condition的shopCategoryId-->
+          <if test="shopCategoryCondition.parent != null">
+              and parent_id = #{shopCategoryCondition.parent.shopCategoryId}
+          </if>
+      </where>
+        order by priority DESC
+    </select>
+</mapper>

@@ -49,17 +49,17 @@ public class ShopManagementController {
     private AreaService areaService;
 
     /**
-     * 获取shop的初始化信息
+     * 获取shop的区域以及类别信息返回给前端
      * @return
      */
-    @RequestMapping(value = "/getshopinitinfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/getshopinitinfo",method = RequestMethod.GET)
     @ResponseBody
     private Map<String,Object> getShopInitInfo(){
         Map<String,Object> modelMap = new HashMap<>();
         List<ShopCategory> shopCategoryList = new ArrayList<>();
         List<Area> areaList = new ArrayList<>();
         try {
-            shopCategoryList = shopCategoryService.getShopCategoryList(new ShopCategory());
+            shopCategoryList = shopCategoryService.getShopCategoryList(new ShopCategory());//获取所有店铺类别
             areaList = areaService.getAreaList();
             modelMap.put("shopCategoryList",shopCategoryList);
             modelMap.put("areaList",areaList);
