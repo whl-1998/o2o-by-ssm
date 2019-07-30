@@ -15,14 +15,13 @@
       parent_id
       from tb_shop_category
       <where>
-          <!--
-          要求所有店铺保存在二级类别下,一级类别进行分类,所以二级类别的parentId是非空的,这里进行判断
-          <if test="shopCategoryCondition != null">
-              and parent_id is not null;
+          <if test="shopCategoryCondition == null">
+              and parent_id is null
           </if>
-          -->
-          <!-- 如果传入的shopCategoryCondition的parent不为空,就select该condition的shopCategoryId-->
-          <if test="shopCategoryCondition.parent != null">
+          <if test="shopCategoryCondition != null">
+              and parent_id is not null
+          </if>
+          <if test="shopCategoryCondition != null and shopCategoryCondition.parent != null and shopCategoryCondition.parent.shopCategoryId != null">
               and parent_id = #{shopCategoryCondition.parent.shopCategoryId}
           </if>
       </where>
