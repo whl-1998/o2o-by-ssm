@@ -11,6 +11,7 @@ import com.whl.o2o.enums.ShopStateEnum;
 import com.whl.o2o.service.AreaService;
 import com.whl.o2o.service.ShopCategoryService;
 import com.whl.o2o.service.ShopService;
+import com.whl.o2o.util.CodeUtil;
 import com.whl.o2o.util.HttpServletRequestUtil;
 import com.whl.o2o.util.ImageUtil;
 import com.whl.o2o.util.PathUtil;
@@ -81,6 +82,13 @@ public class ShopManagementController {
     //从前端通过客户端请求获取request对象，map用于存储前端获取的数据中的键值对结果
     private Map<String,Object> registerShop(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
+        //通过从前端获取的request校验验证码是否一致
+        if(!CodeUtil.checkVerifyCode(request)){
+                modelMap.put("success",false);
+                modelMap.put("errMsg","输入验证码有误");
+                return modelMap;
+        }
+
         //1.接受并转化相应的参数
         String shopStr = HttpServletRequestUtil.getString(request,"shopStr");//获取key为shopStr的value并转换为String
         ObjectMapper mapper = new ObjectMapper();
