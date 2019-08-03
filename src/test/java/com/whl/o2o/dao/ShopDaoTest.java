@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Period;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +26,6 @@ public class ShopDaoTest extends BaseTest {
     private ShopDao shopDao;
 
     @Test
-    @Ignore
     public void testInsertShop(){
         Shop shop = new Shop();
         UserInfo userInfo = new UserInfo();
@@ -51,6 +51,7 @@ public class ShopDaoTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testUpdateShop(){
         Shop shop = new Shop();
         Area area = new Area();
@@ -61,5 +62,35 @@ public class ShopDaoTest extends BaseTest {
         shop.setUpdateTime(new Date());
         int effectedNum = shopDao.updateShop(shop);
         assertEquals(1,effectedNum);
+    }
+
+    @Test
+    @Ignore
+    public void testQueryByShopId(){
+        long shopId = 1;
+        Shop shop = shopDao.queryByShopId(shopId);
+        System.out.println("area id = "+shop.getArea().getAreaId());
+        System.out.println("area name = "+shop.getArea().getAreaName());
+
+    }
+
+    @Test
+    public void testQueryShopList(){
+        Shop shopCondition = new Shop();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(1L);
+        shopCondition.setUserInfo(userInfo);
+        //从第0行开始查询返回5条数据
+        List<Shop> shopList = shopDao.queryShopList(shopCondition,0,5);
+        System.out.println(shopList.size());
+        int count = shopDao.queryShopCount(shopCondition);
+        System.out.println("店铺总数："+count);
+        Area area = new Area();
+        area.setAreaId(3);
+        shopCondition.setArea(area);
+        shopList = shopDao.queryShopList(shopCondition,1,5);
+        count = shopDao.queryShopCount(shopCondition);
+        System.out.println("new shopList Size："+shopList.size());
+        System.out.println("new shop count："+count);
     }
 }

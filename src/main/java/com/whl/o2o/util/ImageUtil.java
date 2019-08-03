@@ -99,4 +99,23 @@ public class ImageUtil {
         String nowTimeStr = sDateFormat.format(new Date());
         return nowTimeStr+ranNum;
     }
+
+    /**
+     * 判断storePath是文件路径还是目录路径
+     * 文件路径:删除文件
+     * 目录路径:删除目录下所有文件
+     * @param storePath
+     */
+    public static void deleteFileOrPath(String storePath){
+        File fileOrPath = new File(PathUtil.getImageBasePath()+storePath);
+        if(fileOrPath.exists()){
+            if(fileOrPath.isDirectory()){
+                File files[] = fileOrPath.listFiles();
+                for(int i = 0;i<files.length;i++){
+                    files[i].delete();
+                }
+            }
+            fileOrPath.delete();
+        }
+    }
 }

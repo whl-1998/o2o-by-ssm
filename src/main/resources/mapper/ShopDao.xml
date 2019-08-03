@@ -3,6 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.whl.o2o.dao.ShopDao">
+
+    <resultMap id="shopMap"  type="com.whl.o2o.entity.Shop">
+        <id column="shop_id" property="shopId"></id>
+        <result column="shop_name" property="shopName"></result>
+        <result column="shop_desc" property="shopDesc"></result>
+        <result column="phone" property="phone"></result>
+        <result column="shop_addr" property="shopAddr"></result>
+        <result column="shop_img" property="shopImg"></result>
+        <result column="priority" property="priority"></result>
+        <result column="enable_status" property="enableStatus"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="advice" property="advice"></result>
+        <association property="area" column="area_id" javaType="Area">
+            <id column="area_id" property="areaId"></id>
+            <result column="area_name" property="areaName"></result>
+        </association>
+        <association property="shopCategory" column="shop_category_id" javaType="ShopCategory">
+            <id column="shop_category_id" property="shopCategoryId"></id>
+            <result column="shop_category_name" property="shopCategoryName"></result>
+        </association>
+        <association property="userInfo" column="user_id" javaType="UserInfo">
+            <id column="user_id" property="userId"></id>
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+
     <insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
         insert into
         tb_shop(owner_id,area_id,shop_category_id,shop_name,shop_desc,shop_addr,
@@ -30,4 +57,115 @@
         </set>
         where shop_id=#{shopId}
     </update>
+
+    <select id="queryByShopId" resultMap="shopMap" parameterType="Long">
+        SELECT
+        shop.shop_id,
+        shop.shop_name,
+        shop.shop_desc,
+        shop.shop_addr,
+        shop.phone,
+        shop.shop_img,
+        shop.priority,
+        shop.create_time,
+        shop.update_time,
+        shop.enable_status,
+        shop.advice,
+        area.area_id,
+        area.area_name,
+        shop_category.shop_category_id,
+        shop_category.shop_category_name
+        from
+        tb_shop shop,
+        tb_area area,
+        tb_shop_category shop_category
+        where
+        shop.area_id = area.area_id
+        and
+        shop.shop_category_id = shop_category.shop_category_id
+        and
+        <!-- 传入的参数 -->
+        shop.shop_id = #{shopId}
+    </select>
+
+    <select id="queryShopList" resultMap="shopMap">
+        SELECT
+        shop.shop_id,
+        shop.shop_name,
+        shop.shop_desc,
+        shop.shop_addr,
+        shop.phone,
+        shop.shop_img,
+        shop.priority,
+        shop.create_time,
+        shop.update_time,
+        shop.enable_status,
+        shop.advice,
+        area.area_id,
+        area.area_name,
+        shop_category.shop_category_id,
+        shop_category.shop_category_name
+        from
+        tb_shop shop,
+        tb_area area,
+        tb_shop_category shop_category
+        <where>
+            <!--如果传入的shopCondition.shopCategory不为空且该shopCategoryId不为空,就可以按照shopCondition.shopCategory.shopCategoryId进行查询-->
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+                and shop.shop_category_id =#{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <!--如果传入的shopCondition.area不为空且该areaId不为空,就可以按照shopCondition.area.areaId进行查询-->
+            <if test="shopCondition.area != null and shopCondition.area.areaId != null">
+                and shop.area_id = #{shopCondition.area.areaId}
+            </if>
+            <!--模糊查询shopName-->
+            <if test="shopCondition.shopName != null">
+                and shop.shop_name like '%${shopCondition.shopName}%'
+            </if>
+            <if test="shopCondition.enableStatus != null">
+                and shop.enable_status = #{shopCondition.enableStatus}
+            </if>
+            <if test="shopCondition.userInfo != null and shopCondition.userInfo.userId != null">
+                and shop.owner_id = #{shopCondition.userInfo.userId}
+            </if>
+            AND
+            shop.area_id=area.area_id
+            AND
+            shop.shop_category_id = shop_category.shop_category_id
+        </where>
+        ORDER BY shop.priority DESC
+        LIMIT #{rowIndex},#{pageSize};
+    </select>
+
+    <select id="queryShopCount" resultType="int">
+        select count(1)
+        from
+        tb_shop shop,
+        tb_area area,
+        tb_shop_category shop_category
+        <where>
+            <!--如果传入的shopCondition.shopCategory不为空且该shopCategoryId不为空,就可以按照shopCondition.shopCategory.shopCategoryId进行查询-->
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+                and shop.shop_category_id =#{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <!--如果传入的shopCondition.area不为空且该areaId不为空,就可以按照shopCondition.area.areaId进行查询-->
+            <if test="shopCondition.area != null and shopCondition.area.areaId != null">
+                and shop.area_id = #{shopCondition.area.areaId}
+            </if>
+            <!--模糊查询shopName-->
+            <if test="shopCondition.shopName != null">
+                and shop.shop_name like '%${shopCondition.shopName}%'
+            </if>
+            <if test="shopCondition.enableStatus != null">
+                and shop.enable_status = #{shopCondition.enableStatus}
+            </if>
+            <if test="shopCondition.userInfo != null and shopCondition.userInfo.userId != null">
+                and shop.owner_id = #{shopCondition.userInfo.userId}
+            </if>
+            AND
+            shop.area_id=area.area_id
+            AND
+            shop.shop_category_id = shop_category.shop_category_id
+        </where>
+    </select>
 </mapper>
