@@ -1,5 +1,6 @@
 package com.whl.o2o.util;
 
+import com.whl.o2o.dto.ImageHolder;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,13 +46,13 @@ public class ImageUtil {
 
     /**
      * 处理缩略图，并返回生成图片相对路径
-     * @param thumbnailInputStream 传入文件
+     * @param imageHolder 传入文件
      * @param targetAddr 处理后的图片存储路径
      * @return
      */
-    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName,String targetAddr){
+    public static String generateThumbnail(ImageHolder imageHolder, String targetAddr){
         String realFileName = getRandomFileName();//随机生成的文件名
-        String extension = getFileExtension(fileName);//获取传入文件的扩展名
+        String extension = getFileExtension(imageHolder.getImageName());//获取传入文件的扩展名
         makeDirPath(targetAddr);//创建目标路径文件夹
         String relativeAddr = targetAddr+realFileName+extension;//拼接目标路径+文件名
         logger.debug("current relativeAddr is:"+relativeAddr);//打印相对路径
@@ -58,7 +60,7 @@ public class ImageUtil {
         logger.debug("current complete addr is:"+PathUtil.getImageBasePath()+relativeAddr);
         try {
             //水印文件处理
-            Thumbnails.of(thumbnailInputStream).size(200,200)
+            Thumbnails.of(imageHolder.getImage()).size(200,200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath+"/watermark.jpg")),0.25f).outputQuality(1.0f)
                     .toFile(dest);
         }catch (IOException e){

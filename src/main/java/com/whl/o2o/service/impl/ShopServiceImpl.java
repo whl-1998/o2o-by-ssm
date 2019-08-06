@@ -1,6 +1,7 @@
 package com.whl.o2o.service.impl;
 
 import com.whl.o2o.dao.ShopDao;
+import com.whl.o2o.dto.ImageHolder;
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Shop;
 import com.whl.o2o.enums.ShopStateEnum;
@@ -32,7 +33,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional//添加事务支持
-    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName) {
+    public ShopExecution addShop(Shop shop, ImageHolder imageHolder) {
         //检查传入的Shop以及与Shop关联的其他对象是否为空 若为空抛出异常并回滚
         if(shop == null){
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
@@ -55,11 +56,11 @@ public class ShopServiceImpl implements ShopService {
             if(effectedNum<=0){
                 throw new ShopOperationException("店铺创建失败");
             }else {
-                if(shopImgInputStream != null){
+                if(imageHolder != null){
                     try {
                         //存储图片：对传入的shopImg进行图片处理以及之前没有附带图片地址的shop进行图片地址的添加
                         //在insertShop成功后，可以通过该shop对象获取主键值（参考mapper中的useGeneratedKeys="true"字段），对shopImgInputStream图片文件流进行相应的存储
-                        addShopImgInputStream(shop,shopImgInputStream,fileName);
+                        addShopImgInputStream(shop,imageHolder);
                         //由于java方法中的对象属性为引用传递，所以我们在addShopImgInputStream中对shop做出的改变会在方法执行完成后保留，若是基本数据类型属性则为值的拷贝传递，在方
                         //法执行完成后对该基本数据类型做出的改变不会进行保留
                     }catch (Exception e){
@@ -85,18 +86,18 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) {
+    public ShopExecution modifyShop(Shop shop,ImageHolder imageHolder) {
         if(shop == null || shop.getShopId()== null){
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         }else {
             try {
                 //当修改店铺传入新的图片时,需要将旧的图片删除
-                if (shopImgInputStream != null && fileName != null && !"".equals(fileName)) {
+                if (imageHolder.getImage() != null && imageHolder.getImageName() != null && !"".equals(imageHolder.getImageName())) {
                     Shop tempShop = shopDao.queryByShopId(shop.getShopId());
                     if (tempShop.getShopImg() != null) {
                         ImageUtil.deleteFileOrPath(tempShop.getShopImg());
                     }
-                    addShopImgInputStream(shop, shopImgInputStream, fileName);
+                    addShopImgInputStream(shop,imageHolder);
                 }
                 //更新店铺信息
                 shop.setUpdateTime(new Date());
@@ -132,13 +133,13 @@ public class ShopServiceImpl implements ShopService {
     /**
      * 对传入的shopImg进行图片处理以及之前没有附带图片地址的shop进行图片地址的添加
      * @param shop
-     * @param shopImgInputStream
+     * @param imageHolder
      */
-    private void addShopImgInputStream(Shop shop, InputStream shopImgInputStream,String fileName) {
+    private void addShopImgInputStream(Shop shop, ImageHolder imageHolder) {
         //通过shopId获取shop图片目录的相对值路径  upload/item/shop/"+shopId+"/"
         String dest = PathUtil.getShopImagePath(shop.getShopId());
         //对shopImg进行相应的thumbnailator图片处理，然后将其图片的绝对路径返回到shopImgAddr
-        String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream,fileName,dest);
+        String shopImgAddr = ImageUtil.generateThumbnail(imageHolder,dest);
         //对shop的图片地址进行更新
         shop.setShopImg(shopImgAddr);
     }

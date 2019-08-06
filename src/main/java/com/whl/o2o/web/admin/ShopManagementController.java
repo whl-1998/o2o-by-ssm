@@ -2,6 +2,7 @@ package com.whl.o2o.web.admin;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whl.o2o.dto.ImageHolder;
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Area;
 import com.whl.o2o.entity.Shop;
@@ -144,7 +145,8 @@ public class ShopManagementController {
             shop.setUserInfo(owner);
             ShopExecution shopExecution = null;//将shop实体类对象和img交给service处理并返回一个执行结果
             try {
-                shopExecution = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                shopExecution = shopService.addShop(shop,imageHolder);
                 if(shopExecution.getState()== ShopStateEnum.CHECK.getState()) {//创建成功
                     modelMap.put("success", true);
                     //一个用户可以创建多个店铺,获取当前用户可操作所有的shop
@@ -213,9 +215,10 @@ public class ShopManagementController {
             ShopExecution shopExecution = null;//将shop实体类对象和img交给service处理并返回一个执行结果
             try {
                 if(shopImg == null){
-                    shopExecution = shopService.modifyShop(shop,null,null);
+                    shopExecution = shopService.modifyShop(shop,null);
                 }else {
-                    shopExecution = shopService.modifyShop(shop,shopImg.getInputStream(), shopImg.getOriginalFilename());
+                    ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                    shopExecution = shopService.modifyShop(shop,imageHolder);
                 }
                 if(shopExecution.getState()== ShopStateEnum.SUCCESS.getState()){//创建成功
                     modelMap.put("success",true);

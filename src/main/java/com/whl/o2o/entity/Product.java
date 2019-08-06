@@ -15,13 +15,13 @@ public class Product {
     private String productDesc;
     private String imgAddr;//商铺缩略图地址
     private String normalPrice;
-    private String discountPrice;
+    private String promotionPrice;
     private Integer priority;
     private Date createTime;
     private Date updateTime;
     private Integer enableStatus;//1可用 0下架
     private List<ProductImg> productImgList;//商品详情图片列表 一对多
-    private ProductCategory productCategoryId;//描述该商品分类
+    private ProductCategory productCategory;//描述该商品分类
     private Shop shop;//描述该商品所属店铺
 
     public Long getProductId() {
@@ -64,12 +64,12 @@ public class Product {
         this.normalPrice = normalPrice;
     }
 
-    public String getDiscountPrice() {
-        return discountPrice;
+    public String getPromotionPrice() {
+        return promotionPrice;
     }
 
-    public void setDiscountPrice(String discountPrice) {
-        this.discountPrice = discountPrice;
+    public void setPromotionPrice(String promotionPrice) {
+        this.promotionPrice = promotionPrice;
     }
 
     public Integer getPriority() {
@@ -112,12 +112,12 @@ public class Product {
         this.productImgList = productImgList;
     }
 
-    public ProductCategory getProductCategoryId() {
-        return productCategoryId;
+    public ProductCategory getProductCategory() {
+        return productCategory;
     }
 
-    public void setProductCategoryId(ProductCategory productCategoryId) {
-        this.productCategoryId = productCategoryId;
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
     }
 
     public Shop getShop() {

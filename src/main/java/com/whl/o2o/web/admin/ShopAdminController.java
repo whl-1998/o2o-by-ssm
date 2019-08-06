@@ -3,6 +3,7 @@ package com.whl.o2o.web.admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author whl
@@ -32,4 +33,7 @@ public class ShopAdminController {
     private String productCategoryManagement(){
         return "shop/productcategorymanagement";
     }
+
+
+
 }

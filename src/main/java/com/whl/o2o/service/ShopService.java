@@ -1,5 +1,6 @@
 package com.whl.o2o.service;
 
+import com.whl.o2o.dto.ImageHolder;
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Shop;
 import com.whl.o2o.exceptions.ShopOperationException;
@@ -15,12 +16,13 @@ import java.io.InputStream;
  */
 public interface ShopService {
     /**
-     * 新增店铺
+     *
      * @param shop
-     * @param shopImgInputStream
+     * @param imageHolder
      * @return
+     * @throws ShopOperationException
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName) throws ShopOperationException;
+    ShopExecution addShop(Shop shop,ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 通过shopId获取shop
@@ -30,13 +32,13 @@ public interface ShopService {
     Shop getByShopId(Long shopId);
 
     /**
-     * 修改shop
+     *
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param imageHolder
      * @return
+     * @throws ShopOperationException
      */
-    ShopExecution modifyShop(Shop shop,InputStream shopImgInputStream,String fileName) throws ShopOperationException;
+    ShopExecution modifyShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
 
     /**

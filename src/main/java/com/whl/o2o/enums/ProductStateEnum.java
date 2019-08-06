@@ -6,8 +6,8 @@ package com.whl.o2o.enums;
  * @Title:
  * @Description:
  */
-public enum  ProductCategoryStateEnum {
-    SUCCESS(1,"操作成功"),INNER_ERROR(-1001,"内部系统错误"),EMPTY_LIST(-1002,"添加数组为空");
+public enum  ProductStateEnum {
+    SUCCESS(1,"操作成功"),INNER_ERROR(-1001,"内部系统错误"),EMPTY_LIST(-1002,"添加数组为空"),EMPTY(-1003,"添加对象为空");
 
     private int state;
     private String stateInfo;
@@ -17,7 +17,7 @@ public enum  ProductCategoryStateEnum {
      * @param state
      * @param stateInfo
      */
-    private ProductCategoryStateEnum(int state,String stateInfo){
+    private ProductStateEnum(int state,String stateInfo){
         this.state = state;
         this.stateInfo = stateInfo;
     }
@@ -27,9 +27,9 @@ public enum  ProductCategoryStateEnum {
      * @param state
      * @return
      */
-    public static ProductCategoryStateEnum stateOf(int state){
+    public static ProductStateEnum stateOf(int state){
         //遍历所有的枚举 如果存在符合的则返回
-        for(ProductCategoryStateEnum stateEnum:values()){
+        for(ProductStateEnum stateEnum:values()){
             if(stateEnum.getState()==state){
                 return stateEnum;
             }

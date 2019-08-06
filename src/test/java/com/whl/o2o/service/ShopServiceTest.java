@@ -1,6 +1,7 @@
 package com.whl.o2o.service;
 
 import com.whl.o2o.BaseTest;
+import com.whl.o2o.dto.ImageHolder;
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Area;
 import com.whl.o2o.entity.Shop;
@@ -65,7 +66,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setPriority(1);
         File shopImg = new File("C:\\Users\\WHL\\Desktop\\0a4e143a-7165-4d5a-8b6b-98c8ace88455.jpg");
         InputStream is = new FileInputStream(shopImg);
-        ShopExecution shopExecution =  shopService.addShop(shop,is,shopImg.getName());//执行成功后返回一个包含CHECK状态和shop实例的shopExecution
+        ImageHolder imageHolder = new ImageHolder("image.jpg",is);
+        ShopExecution shopExecution =  shopService.addShop(shop,imageHolder);//执行成功后返回一个包含CHECK状态和shop实例的shopExecution
         assertEquals(ShopStateEnum.CHECK.getState(),shopExecution.getState());
     }
 
@@ -76,8 +78,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopName("modify");
         File shopImg = new File("C:\\Users\\WHL\\Desktop\\7335888740ee28a868d78bfc82412c30ce8edf89.jpg");
         InputStream is = new FileInputStream(shopImg);
-
-        ShopExecution shopExecution = shopService.modifyShop(shop,is,"zhj.jpg");
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),is);
+        ShopExecution shopExecution = shopService.modifyShop(shop,imageHolder);
         System.out.println("new img des:"+shopExecution.getShop().getShopImg());
     }
 }
