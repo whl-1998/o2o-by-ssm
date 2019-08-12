@@ -9,8 +9,8 @@
         )values
         <foreach collection="list" item="productImg" index="index" separator=",">
             (
-            #{productImg.imgAddr},
             #{productImg.imgDesc},
+            #{productImg.imgAddr},
             #{productImg.priority},
             #{productImg.createTime},
             #{productImg.productId}
@@ -18,8 +18,21 @@
         </foreach>
     </insert>
 
-
-    <select id="queryProductImgList" parameterType="Long" resultType="ProductImg">
-
+    <select id="queryProductImgList" resultType="ProductImg">
+      select
+      product_img_id,
+      img_addr,
+      img_desc,
+      priority,
+      create_time,
+      product_id
+      from tb_product_img where product_id = #{productId}
+      order by product_img_id ASC
     </select>
+
+    <delete id="deleteProductImgByProductId">
+      delete from tb_product_img
+      where
+      product_id = #{productId}
+    </delete>
 </mapper>

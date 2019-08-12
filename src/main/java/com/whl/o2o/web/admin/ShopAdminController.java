@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "shopadmin",method = RequestMethod.GET)
 public class ShopAdminController {
+
     @RequestMapping("/shopoperation")
     public String shopOperation(){
         return "shop/shopoperation";
@@ -29,11 +30,18 @@ public class ShopAdminController {
         return "shop/shopmanagement";
     }
 
-    @RequestMapping(value = "/productcategorymanagement",method = RequestMethod.GET)
+    @RequestMapping(value = "/productcategorymanagement")
     private String productCategoryManagement(){
         return "shop/productcategorymanagement";
     }
 
+    @RequestMapping("/productoperation")
+    private String productOperation(){
+        return  "shop/productoperation";
+    }
 
-
+    @RequestMapping("/productmanagement")
+    private String productManagement(){
+        return "shop/productmanagement";
+    }
 }

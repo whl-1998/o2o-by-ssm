@@ -26,9 +26,9 @@ public interface ProductImgDao {
     int batchInsertProductImg(List<ProductImg> productImgList);
 
     /**
-     * 通过店铺id指定删除的店铺图片
+     * 通过店铺id指定删除的店铺详情图
      * @param productId
      * @return
      */
-    //int deleteProductImgByProductId(Long productId);
+    int deleteProductImgByProductId(Long productId);
 }

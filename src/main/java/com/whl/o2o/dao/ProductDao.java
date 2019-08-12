@@ -10,11 +10,19 @@ public interface ProductDao {
     /**
      * 分页查询product
      * @param productCondition
-     * @param rowIndex
-     * @param pageSize
+     * @param rowIndex 第几行开始取值
+     * @param pageSize 返回条数
      * @return
      */
-    //List<Product> queryProductList(@Param("ProductCondition") Product productCondition,@Param("rowIndex")Integer rowIndex,@Param("pageSize") Integer pageSize);
+    List<Product> queryProductList(@Param("productCondition") Product productCondition, @Param("rowIndex")Integer rowIndex, @Param("pageSize") Integer pageSize);
+
+    /**
+     * 满足productCondition条件的商品总数
+     * @param productCondition
+     * @return
+     */
+    int queryProductCount(@Param("productCondition") Product productCondition);
+
 
     /**
      * 添加商品
@@ -29,5 +37,13 @@ public interface ProductDao {
      * @return
      */
     int updateProduct(Product product);
+
+
+    /**
+     * 通过id检索指定Product
+     * @param productId
+     * @return
+     */
+    Product queryProductById(Long productId);
 
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.whl.o2o.BaseTest;
 import com.whl.o2o.entity.ProductImg;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class ProductImgDaoTest extends BaseTest {
     private ProductImgDao productImgDao;
 
     @Test
-    public void testABatchInsertProductImg() throws Exception{
+    @Ignore
+    public void testABatchInsertProductImg() throws RuntimeException{
         ProductImg productImg1 = new ProductImg();
         productImg1.setImgAddr("图片1");
         productImg1.setCreateTime(new Date());
@@ -49,4 +51,18 @@ public class ProductImgDaoTest extends BaseTest {
         assertEquals(2,effectedNum);
     }
 
+    @Test
+    @Ignore
+    public void testBQueryProductImg(){
+        Long productId = 1L;
+        List<ProductImg> productImgList = productImgDao.queryProductImgList(productId);
+        assertEquals(2,productImgList.size());
+    }
+
+    @Test
+    @Ignore
+    public void testCDeleteProductImg(){
+        int effectedNum = productImgDao.deleteProductImgByProductId(1L);
+        assertEquals(2,effectedNum);
+    }
 }
