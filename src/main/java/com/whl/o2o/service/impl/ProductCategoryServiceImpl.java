@@ -1,6 +1,7 @@
 package com.whl.o2o.service.impl;
 
 import com.whl.o2o.dao.ProductCategoryDao;
+import com.whl.o2o.dao.ProductDao;
 import com.whl.o2o.dto.ProductCategoryExecution;
 import com.whl.o2o.entity.Product;
 import com.whl.o2o.entity.ProductCategory;
@@ -23,6 +24,9 @@ import java.util.List;
 public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Autowired
     private ProductCategoryDao productCategoryDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public List<ProductCategory> getProductCategoryList(Long shopId) {
@@ -50,7 +54,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategoryExecution deleteProductCategory(Long productCategoryId, Long shopId) throws ProductCategoryOperationException {
-        //TODO 将商品类别下的商品的类别id置为null
+        //删除前,将删除的商品类别下的商品的类别id置为null
+        try {
+            int effectedNum = productDao.updateProductCategoryToNull(productCategoryId);
+            if(effectedNum < 0 ){
+                throw new ProductCategoryOperationException("商品类别更新失败");
+            }
+        }catch (Exception e){
+            throw new ProductCategoryOperationException("deleteProductCategoryId error :"+e.toString());
+        }
+        //删除该productCategory
         try {
             int effectedNum = productCategoryDao.deleteProductCategory(productCategoryId,shopId);
             if(effectedNum <= 0){

@@ -11,7 +11,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestPropertySource;
 
+import javax.servlet.http.PushBuilder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -138,5 +140,12 @@ public class ProductDaoTest extends BaseTest {
         product.setUpdateTime(new Date());
         int effectedNum = productDao.updateProduct(product);
         assertEquals(1,effectedNum);
+    }
+
+
+    @Test
+    public void testUpdateProductCategoryToNull(){
+        int effectedNum = productDao.updateProductCategoryToNull(13L);
+        assertEquals(2,effectedNum);
     }
 }

@@ -46,4 +46,10 @@ public interface ProductDao {
      */
     Product queryProductById(Long productId);
 
+    /**
+     * 删除商品类别前,将商品表的商品类别id置为空
+     * @param productCategoryId
+     * @return
+     */
+    int updateProductCategoryToNull(long productCategoryId);
 }

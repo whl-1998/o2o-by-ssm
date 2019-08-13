@@ -42,4 +42,6 @@
         and
         shop_id = #{shopId}
     </delete>
+
+
 </mapper>
