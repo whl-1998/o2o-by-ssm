@@ -21,11 +21,11 @@ public class ShopCategoryDaoTest extends BaseTest {
     @Test
     public void testQueryShopCategory() {
         ShopCategory shopCategoryCondition = new ShopCategory();
-        ShopCategory shopCategory = new ShopCategory();
-        shopCategory.setShopCategoryId(4L);
-        shopCategoryCondition.setParent(shopCategory);
+//        ShopCategory shopCategory = new ShopCategory();
+//        shopCategory.setShopCategoryId(4L);
+//        shopCategoryCondition.setParent(shopCategory);
 
         List<ShopCategory> shopCategoryList = shopCategoryDao.queryShopCategory(shopCategoryCondition);
-        System.out.println(shopCategoryList.size());
+        assertEquals(3,shopCategoryList.size());
     }
 }

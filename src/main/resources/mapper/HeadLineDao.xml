@@ -8,13 +8,15 @@
       line_id,
       line_name,
       line_link,
-      line_img,priority,
+      line_img,
+      priority,
       enable_status,
       create_time,
       update_time
       from
       tb_head_line
       <where>
+          <!--可以通过传入的condition的enableStatus进行检索-->
           <if test="headLineCondition.enableStatus != null">
               and enable_status = #{headLineCondition.enableStatus}
           </if>

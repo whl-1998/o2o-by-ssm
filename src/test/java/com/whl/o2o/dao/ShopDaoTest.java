@@ -75,22 +75,15 @@ public class ShopDaoTest extends BaseTest {
     }
 
     @Test
-    public void testQueryShopList(){
+    public void testQueryShopListAndCount(){
         Shop shopCondition = new Shop();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(1L);
-        shopCondition.setUserInfo(userInfo);
+        ShopCategory shopCategoryChild = new ShopCategory();
+        ShopCategory shopCategoryParent = new ShopCategory();
+        shopCategoryParent.setShopCategoryId(2L);
+        shopCategoryChild.setParent(shopCategoryParent);
+        shopCondition.setShopCategory(shopCategoryChild);
         //从第0行开始查询返回5条数据
         List<Shop> shopList = shopDao.queryShopList(shopCondition,0,5);
         System.out.println(shopList.size());
-        int count = shopDao.queryShopCount(shopCondition);
-        System.out.println("店铺总数："+count);
-        Area area = new Area();
-        area.setAreaId(3);
-        shopCondition.setArea(area);
-        shopList = shopDao.queryShopList(shopCondition,1,5);
-        count = shopDao.queryShopCount(shopCondition);
-        System.out.println("new shopList Size："+shopList.size());
-        System.out.println("new shop count："+count);
     }
 }
