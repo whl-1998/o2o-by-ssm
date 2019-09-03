@@ -85,5 +85,9 @@ public class ShopDaoTest extends BaseTest {
         //从第0行开始查询返回5条数据
         List<Shop> shopList = shopDao.queryShopList(shopCondition,0,5);
         System.out.println(shopList.size());
+
+        for(Shop shop: shopList){
+            System.out.println(shop.getShopName());
+        }
     }
 }
