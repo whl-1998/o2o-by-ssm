@@ -11,7 +11,7 @@ import java.util.PrimitiveIterator;
  */
 public class UserInfo {
     private Long userId;
-    private String name;
+    private String username;
     private String profileImg;//头像
     private String email;
     private String gender;
@@ -29,11 +29,11 @@ public class UserInfo {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.username = username;
     }
 
     public String getProfileImg() {

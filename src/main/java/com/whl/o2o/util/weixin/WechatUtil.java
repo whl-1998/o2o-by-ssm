@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whl.o2o.dto.UserAccessToken;
 import com.whl.o2o.dto.WechatUser;
+import com.whl.o2o.entity.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,6 +102,20 @@ public class WechatUtil {
             return null;
         }
         return user;
+    }
+
+    /**
+     * 将微信用户里的信息转换成userInfo的信息并返回其实体类
+     * @param user
+     * @return
+     */
+    public static UserInfo getUserInfoFromRequest(WechatUser user){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setName(user.getNickName());
+        userInfo.setGender(user.getSex()+"");
+        userInfo.setProfileImg(user.getHeadimgurl());
+        userInfo.setEnableStatus(1);
+        return userInfo;
     }
 
     /**

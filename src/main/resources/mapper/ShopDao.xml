@@ -25,7 +25,7 @@
         </association>
         <association property="userInfo" column="user_id" javaType="UserInfo">
             <id column="user_id" property="userId"></id>
-            <result column="name" property="name"></result>
+            <result column="user_name" property="username"></result>
         </association>
     </resultMap>
 

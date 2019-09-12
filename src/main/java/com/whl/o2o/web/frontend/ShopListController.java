@@ -1,4 +1,4 @@
-package com.whl.o2o.web.superadmin;
+package com.whl.o2o.web.frontend;
 
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Area;
