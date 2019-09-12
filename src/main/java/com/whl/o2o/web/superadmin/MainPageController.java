@@ -1,4 +1,4 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.superadmin;
 
 import com.whl.o2o.entity.HeadLine;
 import com.whl.o2o.entity.ShopCategory;
@@ -6,7 +6,6 @@ import com.whl.o2o.service.HeadLineService;
 import com.whl.o2o.service.ShopCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;

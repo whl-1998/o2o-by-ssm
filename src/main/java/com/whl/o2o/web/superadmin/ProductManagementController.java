@@ -1,7 +1,6 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.superadmin;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whl.o2o.dto.ImageHolder;
 import com.whl.o2o.dto.ProductExecution;
@@ -14,7 +13,6 @@ import com.whl.o2o.service.ProductCategoryService;
 import com.whl.o2o.service.ProductService;
 import com.whl.o2o.util.CodeUtil;
 import com.whl.o2o.util.HttpServletRequestUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import javax.print.DocFlavor;
-import javax.servlet.GenericFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;

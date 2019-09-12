@@ -1,4 +1,4 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.superadmin;
 
 import com.whl.o2o.dto.ShopExecution;
 import com.whl.o2o.entity.Area;
@@ -8,7 +8,6 @@ import com.whl.o2o.service.AreaService;
 import com.whl.o2o.service.ShopCategoryService;
 import com.whl.o2o.service.ShopService;
 import com.whl.o2o.util.HttpServletRequestUtil;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

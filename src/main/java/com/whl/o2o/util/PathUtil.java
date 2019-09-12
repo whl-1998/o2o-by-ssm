@@ -7,9 +7,6 @@ package com.whl.o2o.util;
  * @Description:
  */
 public class PathUtil {
-    //获取文件分割符
-    private static final String SEPARATOR = System.getProperty("file.separator");
-
     //获取项目图片存储的根路径
     public static String getImageBasePath() {
         String os = System.getProperty("os.name");
@@ -19,7 +16,7 @@ public class PathUtil {
         }else {
             basePath = "/home/whl/image/";
         }
-        return basePath.replace("/",SEPARATOR);
+        return basePath;
     }
 
     /**
@@ -29,11 +26,6 @@ public class PathUtil {
      */
     public static String getShopImagePath(long shopId){
         String imagePath = "/upload/item/shop/"+shopId+"/";
-        return imagePath.replace("/",SEPARATOR);
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println();
+        return imagePath;
     }
 }

@@ -1,4 +1,4 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.shopadmin;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,17 +34,15 @@ import java.util.Map;
  * @author whl
  * @version V1.0
  * @Title:
- * @Description:
+ * @Description:店铺管理Controller
  */
 @Controller
 @RequestMapping("/shopadmin")
 public class ShopManagementController {
     @Autowired
     private ShopService shopService;
-
     @Autowired
     private ShopCategoryService shopCategoryService;
-
     @Autowired
     private AreaService areaService;
 
@@ -115,25 +113,25 @@ public class ShopManagementController {
                 return modelMap;
         }
         //1.接受并转化相应的参数
-        String shopStr = HttpServletRequestUtil.getString(request,"shopStr");//获取key为shopStr的value并转换为String
+        String shopStr = HttpServletRequestUtil.getString(request,"shopStr");
         ObjectMapper mapper = new ObjectMapper();
         Shop shop = null;
         try {
-            //将前端获取的信息转化为Shop实体类
+            //将前端获取的shopStr-JSON转化为Shop实体类
             shop = mapper.readValue(shopStr,Shop.class);
         } catch (Exception e){
             modelMap.put("success",false);
             modelMap.put("errMsg",e.getMessage());
-            return modelMap;//若转换出现异常则返回一个附带错误信息的map对象
+            return modelMap;//若转换出现异常则返直接retrun modelMap
         }
         //采用cmp接收图片信息
         CommonsMultipartFile shopImg = null;
         //解析
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-        if(commonsMultipartResolver.isMultipart(request)){
+        if(commonsMultipartResolver.isMultipart(request)){//如果request中附带传入的文件流 则转换后获取
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
             shopImg = (CommonsMultipartFile)multipartHttpServletRequest.getFile("shopImg");
-        }else {
+        }else {//这里图片上传是必须操作 若非必须则不必写
             modelMap.put("success",false);
             modelMap.put("errMsg","上传图片不能为空");
             return modelMap;

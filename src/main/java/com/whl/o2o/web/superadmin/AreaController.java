@@ -1,4 +1,4 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.superadmin;
 
 import com.whl.o2o.entity.Area;
 import com.whl.o2o.service.AreaService;
@@ -25,12 +25,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class AreaController {
+    //创建logger实例
     Logger logger = LoggerFactory.getLogger(AreaController.class);
     @Autowired
     private AreaService areaService;
 
     @RequestMapping(value = "/listarea",method = RequestMethod.GET)
-    @ResponseBody//用于使controller返回的数据对象自动转换为json
+    @ResponseBody
     private Map<String,Object> listArea(){
         logger.info("========start========");
         long startTime = System.currentTimeMillis();

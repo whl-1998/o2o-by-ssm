@@ -1,6 +1,5 @@
-package com.whl.o2o.web.admin;
+package com.whl.o2o.web.superadmin;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.whl.o2o.entity.Product;
 import com.whl.o2o.service.ProductService;
 import com.whl.o2o.util.HttpServletRequestUtil;
