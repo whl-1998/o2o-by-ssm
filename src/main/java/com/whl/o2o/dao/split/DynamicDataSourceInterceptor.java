@@ -33,7 +33,6 @@ public class DynamicDataSourceInterceptor implements Interceptor {
         MappedStatement ms = (MappedStatement) objects[0];
         String lookupKey = DynamicDataSourceHolder.DB_MASTER;
         if(synchronizationActive != true) {
-
             //读
             if (ms.getSqlCommandType().equals(SqlCommandType.SELECT)) {
                 if (ms.getId().contains(SelectKeyGenerator.SELECT_KEY_SUFFIX)) {
@@ -51,7 +50,7 @@ public class DynamicDataSourceInterceptor implements Interceptor {
         }else {
             lookupKey = DynamicDataSourceHolder.DB_MASTER;
         }
-        logger.debug("设置方法[{}] use[{}] Strategy,SqlCommanType[{}]..",ms.getId(),lookupKey,ms.getSqlCommandType().name());
+        logger.debug("设置方法[{}] use[{}] Strategy,SqlCommanType[{}]..", ms.getId(), lookupKey, ms.getSqlCommandType().name());
         DynamicDataSourceHolder.setDbType(lookupKey);
         return invocation.proceed();
     }

@@ -17,7 +17,6 @@ public class SignUtil {
 
     /**
      * 验证签名
-     *
      * @param signature
      * @param timestamp
      * @param nonce

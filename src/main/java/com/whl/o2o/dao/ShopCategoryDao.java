@@ -12,6 +12,7 @@ import java.util.List;
  * @Description:
  */
 public interface ShopCategoryDao {
+
     /**
      * 返回所有的ShopCategory对象
      * @param shopCategoryCondition

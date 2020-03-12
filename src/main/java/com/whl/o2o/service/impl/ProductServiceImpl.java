@@ -37,42 +37,42 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductExecution addProduct(Product product, ImageHolder imageHolder, List<ImageHolder> imageHolderList) throws ProductOperationException {
-        if(product != null && product.getShop() != null && product.getShop().getShopId() != null) {
+        if (product != null && product.getShop() != null && product.getShop().getShopId() != null) {
             product.setCreateTime(new Date());
             product.setUpdateTime(new Date());
             product.setEnableStatus(1);
             //若商品缩略图不为空则添加
-            if(imageHolder != null){
-                addImageHolder(product,imageHolder);
+            if (imageHolder != null) {
+                addImageHolder(product, imageHolder);
             }
             try {
                 int effectedNum = productDao.insertProduct(product);
-                if(effectedNum<=0){
+                if (effectedNum <= 0) {
                     throw new ProductOperationException("创建商品失败");
                 }
-            }catch (Exception e){
-                throw new ProductOperationException("创建商品失败:"+e.toString());
+            } catch (Exception e) {
+                throw new ProductOperationException("创建商品失败: " + e.toString());
             }
             //若商品详情图不为空则添加
-            if (imageHolderList != null && imageHolderList.size() != 0){
-                addImageHolderList(product,imageHolderList);
+            if (imageHolderList != null && imageHolderList.size() != 0) {
+                addImageHolderList(product, imageHolderList);
             }
-            return new ProductExecution(ProductStateEnum.SUCCESS,product);
-        }else {
+            return new ProductExecution(ProductStateEnum.SUCCESS, product);
+        } else {
             return new ProductExecution(ProductStateEnum.EMPTY);
         }
     }
 
     @Override
     public ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize) {
-        int rowIndex = PageCalculator.calculateRowIndex(pageIndex,pageSize);
-        List<Product> productList = productDao.queryProductList(productCondition,rowIndex,pageSize);
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+        List<Product> productList = productDao.queryProductList(productCondition, rowIndex, pageSize);
         int count = productDao.queryProductCount(productCondition);
         ProductExecution productExecution = new ProductExecution();
-        if(productList != null){
+        if (productList != null) {
             productExecution.setProductList(productList);
             productExecution.setCount(count);
-        }else {
+        } else {
             productExecution.setState(ProductStateEnum.EMPTY_LIST.getState());
         }
         return productExecution;
@@ -94,77 +94,80 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductExecution modifyProduct(Product product, ImageHolder imageHolder, List<ImageHolder> imageHolderList) throws ProductOperationException {
         //空值判断
-        if(product != null && product.getShop() != null && product.getShop().getShopId() != null){
+        if (product != null && product.getShop() != null && product.getShop().getShopId() != null) {
             //设置更新的默认属性
             product.setUpdateTime(new Date());
             //若缩略图不为空且原有缩略图不为空,删除原有后添加
-            if(imageHolder != null){
+            if (imageHolder != null) {
                 //获取原有缩略图信息 并删除
                 Product oriProduct = productDao.queryProductById(product.getProductId());
-                if(oriProduct.getImgAddr() != null){
+                if (oriProduct.getImgAddr() != null) {
                     ImageUtil.deleteFileOrPath(oriProduct.getImgAddr());
                 }
                 //添加新的缩略图
-                addImageHolder(product,imageHolder);
+                addImageHolder(product, imageHolder);
             }
             //若详情图不为空且原有详情图不为空,删除原有后添加
-            if(imageHolderList != null && imageHolderList.size() > 0){
+            if (imageHolderList != null && imageHolderList.size() > 0) {
                 //删除原
                 deleteImageHolderList(product.getProductId());
                 //新增
-                addImageHolderList(product,imageHolderList);
+                addImageHolderList(product, imageHolderList);
             }
             //更新商品信息
             try {
                 int effectedNum = productDao.updateProduct(product);
-                if(effectedNum<=0 ){
+                if (effectedNum <= 0) {
                     throw new ProductOperationException("更新商品信息失败");
                 }
-                return new ProductExecution(ProductStateEnum.SUCCESS,product);
-            }catch (Exception e){
+                return new ProductExecution(ProductStateEnum.SUCCESS, product);
+            } catch (Exception e) {
                 throw new ProductOperationException("更新商品信息失败" + e.toString());
             }
-        }else{
+        } else {
             return new ProductExecution(ProductStateEnum.EMPTY);
         }
     }
 
-    private void deleteImageHolderList(Long productId) {
-        //获取productId获取原缩略图
+    private void deleteImageHolderList(Long productId) throws ProductOperationException {
+        //获取productId获取原详情图
         List<ProductImg> productImgList = productImgDao.queryProductImgList(productId);
         //删除原文件
-        for(ProductImg productImg:productImgList){
+        for (ProductImg productImg : productImgList) {
             ImageUtil.deleteFileOrPath(productImg.getImgAddr());
         }
         //删除数据库原记录
-        productImgDao.deleteProductImgByProductId(productId);
+        int effectedNum = productImgDao.deleteProductImgByProductId(productId);
+        if (effectedNum <= 0) {
+            throw new ProductOperationException("删除productImg表的字段失败");
+        }
     }
 
     private void addImageHolder(Product product, ImageHolder imageHolder) {
-        String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
-        String thumbnailAddr = ImageUtil.generateThumbnail(imageHolder,dest);
-        product.setImgAddr(thumbnailAddr);
+        String dest = PathUtil.getShopImagePath(product.getShop().getShopId());//获取文件存储的子路径
+        String thumbnailAddr = ImageUtil.generateThumbnail(imageHolder, dest);
+        product.setImgAddr(thumbnailAddr);//将商品缩略图相对地址地址添加到product实例的属性上
     }
 
     private void addImageHolderList(Product product, List<ImageHolder> imageHolderList) {
-        String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
+        String dest = PathUtil.getShopImagePath(product.getShop().getShopId());//获取文件存储的子路径
         List<ProductImg> productImgList = new ArrayList<>();
-        for(ImageHolder productImageHolder: imageHolderList){
-            String imgAddr = ImageUtil.generateThumbnail(productImageHolder,dest);
+        for (ImageHolder productImageHolder : imageHolderList) {
+            String imgAddr = ImageUtil.generateThumbnail(productImageHolder, dest);
             ProductImg productImg = new ProductImg();
             productImg.setImgAddr(imgAddr);
             productImg.setProductId(product.getProductId());
             productImg.setCreateTime(new Date());
             productImgList.add(productImg);
         }
-        if(productImgList.size()>0){
+        if (productImgList.size() > 0) {
             try {
                 int effectedNum = productImgDao.batchInsertProductImg(productImgList);
-                if(effectedNum<=0){
+                if (effectedNum <= 0) {
                     throw new ProductOperationException("创建商品详情图失败");
                 }
-            }catch (Exception e){
-                throw new ProductOperationException("创建商品详情图失败:"+e.toString());
+            } catch (Exception e) {
+                throw new ProductOperationException("创建商品详情图失败: " + e.toString());
             }
         }
     }

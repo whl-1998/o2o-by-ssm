@@ -45,7 +45,7 @@ public class ImageUtil {
     }
 
     /**
-     * 处理缩略图，并返回生成图片相对路径
+     * 处理缩略图, 并返回生成图片的相对路径
      * @param imageHolder 传入文件
      * @param targetAddr 处理后的图片存储路径
      * @return
@@ -54,17 +54,18 @@ public class ImageUtil {
         String realFileName = getRandomFileName();//随机生成的文件名
         String extension = getFileExtension(imageHolder.getImageName());//获取传入文件的扩展名
         makeDirPath(targetAddr);//创建目标路径文件夹
-        String relativeAddr = targetAddr+realFileName+extension;//拼接目标路径+文件名
-        logger.debug("current relativeAddr is:"+relativeAddr);//打印相对路径
-        File dest = new File(PathUtil.getImageBasePath()+relativeAddr);//在目标图片存储根路径下的目标路径创建dest文件
-        logger.debug("current complete addr is:"+PathUtil.getImageBasePath()+relativeAddr);
+        String relativeAddr = targetAddr + realFileName + extension;//拼接相对路径 = 目标路径 + 文件名
+        logger.debug("current relativeAddr is: " + relativeAddr);//打印相对路径到日志
+        File dest = new File(PathUtil.getImageBasePath() + relativeAddr);//在目标图片存储根路径下的目标路径创建dest文件
+        logger.debug("current complete addr is: " + PathUtil.getImageBasePath() + relativeAddr);//打印完整路径到日志
         try {
             //水印文件处理
             Thumbnails.of(imageHolder.getImage()).size(200,200)
-                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath+"/watermark.jpg")),0.25f).outputQuality(1.0f)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
+                    .outputQuality(1.0f)
                     .toFile(dest);
-        }catch (IOException e){
-            logger.error(e.toString());
+        } catch (IOException e) {
+            logger.error(e.toString());//若水印文件处理出错, 打印错误信息到日志
             e.printStackTrace();
         }
         return relativeAddr;//处理完图片后返回图片的相对路径地址
@@ -75,9 +76,9 @@ public class ImageUtil {
      * @param targetAddr
      */
     private static void makeDirPath(String targetAddr) {
-         String realFileParentPath = PathUtil.getImageBasePath()+targetAddr;
+         String realFileParentPath = PathUtil.getImageBasePath() + targetAddr;
          File dirPath = new File(realFileParentPath);
-         if(!dirPath.exists()){
+         if(!dirPath.exists()) {
              dirPath.mkdirs();//递归创建文件夹
          }
     }
@@ -97,7 +98,7 @@ public class ImageUtil {
      */
     public static String getRandomFileName() {
         //获取随机5位数
-        int ranNum = RANDOM.nextInt(89999)+10000;
+        int ranNum = RANDOM.nextInt(89999) + 10000;
         String nowTimeStr = sDateFormat.format(new Date());
         return nowTimeStr+ranNum;
     }
@@ -109,12 +110,12 @@ public class ImageUtil {
      * @param storePath
      */
     public static void deleteFileOrPath(String storePath){
-        File fileOrPath = new File(PathUtil.getImageBasePath()+storePath);
-        if(fileOrPath.exists()){
-            if(fileOrPath.isDirectory()){
+        File fileOrPath = new File(PathUtil.getImageBasePath() + storePath);
+        if (fileOrPath.exists()) {
+            if (fileOrPath.isDirectory()) {
                 File files[] = fileOrPath.listFiles();
-                for(int i = 0;i<files.length;i++){
-                    files[i].delete();
+                for (File f : files) {
+                    f.delete();
                 }
             }
             fileOrPath.delete();

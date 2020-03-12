@@ -13,6 +13,7 @@ import java.util.List;
  * @Description:
  */
 public interface ShopDao {
+
     /**
      * 添加店铺
      * @param shop
@@ -41,13 +42,13 @@ public interface ShopDao {
      * @param pageSize  返回的条数
      * @return
      */
-    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,@Param("rowIndex") int rowIndex,@Param("pageSize") int pageSize);
+    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
 
     /**
      * 返回shopList总数
      * @param shopCondition
      * @return
      */
-    Integer queryShopCount(@Param("shopCondition")Shop shopCondition);
+    Integer queryShopCount(@Param("shopCondition") Shop shopCondition);
 
 }

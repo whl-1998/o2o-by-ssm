@@ -17,7 +17,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoDao userInfoDao;
 
-
     @Override
     public UserInfo getUserInfoById(Long userId) {
         return userInfoDao.queryUserInfoById(userId);

@@ -11,5 +11,7 @@ import java.util.List;
  * @Description:
  */
 public interface AreaService {
-    public List<Area> getAreaList();
+    String AREA_LIST_KEY = "arealist";
+
+    List<Area> getAreaList();
 }

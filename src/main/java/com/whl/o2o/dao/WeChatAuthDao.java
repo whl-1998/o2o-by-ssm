@@ -9,6 +9,7 @@ import com.whl.o2o.entity.WeChatAuth;
  * @Description:
  */
 public interface WeChatAuthDao {
+
     /**
      * 通过openId 查询对应本平台的微信账号
      * @param openId
@@ -22,5 +23,4 @@ public interface WeChatAuthDao {
      * @return
      */
     int insertWeChatAuth(WeChatAuth weChatAuth);
-
 }

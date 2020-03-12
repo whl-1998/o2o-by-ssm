@@ -25,11 +25,6 @@ public class ProductDetailController {
     @Autowired
     private ProductService productService;
 
-
-
-
-
-
     @RequestMapping(value = "listproductdetailpageinfo",method = RequestMethod.GET)
     @ResponseBody
     private Map<String,Object> listProductDetailPageInfo(HttpServletRequest request){

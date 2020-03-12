@@ -10,10 +10,10 @@ public class PathUtil {
     //获取项目图片存储的根路径
     public static String getImageBasePath() {
         String os = System.getProperty("os.name");
-        String basePath = "";
-        if(os.toLowerCase().startsWith("win")){
+        String basePath;
+        if (os.toLowerCase().startsWith("win")) {
             basePath = "D:/projectDev/image/";
-        }else {
+        } else {
             basePath = "/home/whl/image/";
         }
         return basePath;
@@ -24,8 +24,8 @@ public class PathUtil {
      * @param shopId
      * @return
      */
-    public static String getShopImagePath(long shopId){
-        String imagePath = "/upload/item/shop/"+shopId+"/";
+    public static String getShopImagePath(long shopId) {
+        String imagePath = "/upload/item/shop/" + shopId + "/";
         return imagePath;
     }
 }

@@ -23,5 +23,4 @@ public interface UserInfoDao {
      * @return
      */
     int insertUserInfo(UserInfo userInfo);
-
 }

@@ -1,10 +1,7 @@
 package com.whl.o2o.dao;
 
-import com.whl.o2o.entity.Product;
 import com.whl.o2o.entity.ProductCategory;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-
 
 import java.util.List;
 
@@ -16,7 +13,6 @@ public interface ProductCategoryDao {
      * @return
      */
     List<ProductCategory> queryProductCategoryList(Long shopId);
-
 
     /**
      * 批量添加productCategory

@@ -12,5 +12,11 @@ import java.util.List;
  * @Description:
  */
 public interface HeadLineDao {
+
+    /**
+     * 获取所有头条实体列表
+     * @param headLine
+     * @return
+     */
     List<HeadLine> queryHeadLine(@Param("headLineCondition") HeadLine headLine);
 }

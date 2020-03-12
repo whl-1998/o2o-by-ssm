@@ -18,5 +18,4 @@ public interface WeChatAuthService {
     WeChatAuth getWeChatAuthByOpenId(String openId);
 
     WeChatAuthExecution register(WeChatAuth weChatAuth) throws WeChatAuthOperationException;
-
 }

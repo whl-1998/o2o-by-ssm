@@ -13,5 +13,7 @@ import java.util.List;
  * @Description:
  */
 public interface HeadLineService {
+    String HEAD_LINE_LIST= "headlinelist";
+
     List<HeadLine> getHeadLineList(HeadLine headLineCondition);
 }

@@ -14,13 +14,13 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>9</maven.compiler.source>
-    <maven.compiler.target>9</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <spring.version>5.1.8.RELEASE</spring.version>
   </properties>
 
   <dependencies>
-    <!--测试模块-->
+    <!-- 单元测试模块 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -28,56 +28,57 @@
       <scope>test</scope>
     </dependency>
 
-    <!--日志相关 -->
+    <!-- 日志相关 -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
     </dependency>
+
     <!-- Spring -->
-    <!--Spring框架基本的核心工具类-->
+    <!-- Spring框架基本的核心工具类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--包含访问配置文件、创建和管理bean 以及进行控制反转操作相关的所有类-->
+    <!-- 包含访问配置文件、创建和管理bean 以及进行控制反转操作相关的所有类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--为Spring核心提供了大量扩展,可以找到使用Spring ApplicationContext特性时所需的全部类-->
+    <!-- 为Spring核心提供了大量扩展,可以找到使用Spring ApplicationContext特性时所需的全部类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--包含对Spring 对JDBC 数据访问进行封装的所有类-->
+    <!-- 包含对Spring 对JDBC 数据访问进行封装的所有类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--为JDBC、Hibernate、JDO、JPA等提供的一致的声明式和编程式事务管理-->
+    <!-- 为JDBC、Hibernate、JDO、JPA等提供的一致的声明式和编程式事务管理 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--包含Web应用开发时用到Spring框架时所需的核心类,包括自动载入WebApplicationContext特性的类、Struts与JSF集成类、文件上传的支持类、Filter类和大量工具辅助类-->
+    <!-- 包含Web应用开发时用到Spring框架时所需的核心类,包括自动载入WebApplicationContext特性的类、Struts与JSF集成类、文件上传的支持类、Filter类和大量工具辅助类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--包含SpringMVC框架相关的所有类-->
+    <!-- 包含SpringMVC框架相关的所有类 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <!--Spring整合junit-->
+    <!-- Spring整合junit -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
@@ -96,7 +97,8 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.9.9</version>
     </dependency>
-    <!--Map工具类 对标准java Collection的扩展 spring-core.jar需commons-collections.jar -->
+
+    <!-- Map工具类 对标准java Collection的扩展 spring-core.jar需commons-collections.jar -->
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
@@ -109,11 +111,13 @@
       <artifactId>mybatis</artifactId>
       <version>3.5.1</version>
     </dependency>
+
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
       <version>2.0.1</version>
     </dependency>
+
     <!-- mysql驱动类 -->
     <dependency>
       <groupId>mysql</groupId>
@@ -121,7 +125,7 @@
       <version>8.0.16</version>
     </dependency>
 
-    <!--连接池-->
+    <!-- 连接池 -->
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
@@ -134,25 +138,34 @@
       <artifactId>thumbnailator</artifactId>
       <version>0.4.8</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+
+    <!-- 验证码相关 -->
     <dependency>
       <groupId>com.github.penggle</groupId>
       <artifactId>kaptcha</artifactId>
       <version>2.3.2</version>
     </dependency>
+
+    <!-- 文件上传 -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>1.3.2</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+    <!-- javassist动态编译 -->
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <version>3.25.0-GA</version>
     </dependency>
 
+    <!-- Redis客户端：jedis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.9.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -160,14 +173,14 @@
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.6.1</version>
           <configuration>
             <source>1.8</source>
             <target>1.8</target>
-            <encoding>UTF-8</encoding>
+            <encoding>UTF8</encoding>
           </configuration>
         </plugin>
       </plugins>

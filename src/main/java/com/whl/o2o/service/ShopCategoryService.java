@@ -11,5 +11,7 @@ import java.util.List;
  * @Description:
  */
 public interface ShopCategoryService {
+    String SHOP_CATEGORY_LIST = "shopcategorylist";
+
     List<ShopCategory> getShopCategoryList(ShopCategory shopCategoryCondition);
 }

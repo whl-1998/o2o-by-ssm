@@ -25,7 +25,7 @@ public class DynamicDataSourceHolder {
     }
 
     public static void setDbType(String str){
-        logger.debug("所使用的的数据源为 "+str);
+        logger.debug("所使用的的数据源为 " + str);
         contextHolder.set(str);
     }
 

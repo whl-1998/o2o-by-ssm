@@ -34,6 +34,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+
     <!-- INFO -->
     <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 -->
@@ -54,6 +55,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+
     <!-- ERROR -->
     <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 -->

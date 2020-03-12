@@ -25,30 +25,30 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class AreaController {
-    //创建logger实例
     Logger logger = LoggerFactory.getLogger(AreaController.class);
+
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping(value = "/listarea",method = RequestMethod.GET)
+    @RequestMapping(value = "/listarea", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listArea(){
+    private Map<String, Object> listArea() {
         logger.info("========start========");
         long startTime = System.currentTimeMillis();
-        Map<String,Object> modelMap = new HashMap<>();
-        List<Area> list = new ArrayList<>();
+        Map<String, Object> modelMap = new HashMap<>();
+        List<Area> list;
         try {
             list = areaService.getAreaList();
-            modelMap.put("rows",list);
-            modelMap.put("total",list.size());
-        }catch (Exception e){
+            modelMap.put("rows", list);
+            modelMap.put("total", list.size());
+        } catch (Exception e) {
             e.printStackTrace();
-            modelMap.put("success",false);
-            modelMap.put("errMsg",e.toString());
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.toString());
         }
         logger.error("test error!");
         long endTime = System.currentTimeMillis();
-        logger.debug("costTime=[{}ms]",endTime-startTime);
+        logger.debug("costTime = [{}ms]", endTime - startTime);
         logger.info("========end==========");
         return modelMap;
     }

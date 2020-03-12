@@ -34,7 +34,7 @@ public interface ProductService {
      * @param pageSize
      * @return
      */
-    ProductExecution getProductList(Product productCondition,int pageIndex,int pageSize);
+    ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize);
 
     /**
      * 通过商品id查询唯一商品信息
@@ -51,5 +51,5 @@ public interface ProductService {
      * @return
      * @throws ProductOperationException
      */
-    ProductExecution modifyProduct(Product product,ImageHolder imageHolder,List<ImageHolder> imageHolderList) throws ProductOperationException;
+    ProductExecution modifyProduct(Product product, ImageHolder imageHolder, List<ImageHolder> imageHolderList) throws ProductOperationException;
 }

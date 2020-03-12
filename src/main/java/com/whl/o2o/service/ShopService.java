@@ -22,7 +22,7 @@ public interface ShopService {
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution addShop(Shop shop,ImageHolder imageHolder) throws ShopOperationException;
+    ShopExecution addShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 通过shopId获取shop
@@ -40,7 +40,6 @@ public interface ShopService {
      */
     ShopExecution modifyShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
-
     /**
      * 分页查询shop
      * @param ShopCondition
@@ -48,7 +47,5 @@ public interface ShopService {
      * @param pageSize  返回条数
      * @return
      */
-    public ShopExecution getShopList(Shop ShopCondition,int pageIndex,int pageSize);
-
-
+    ShopExecution getShopList(Shop ShopCondition, int pageIndex, int pageSize);
 }

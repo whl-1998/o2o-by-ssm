@@ -11,6 +11,7 @@ import java.util.List;
  * @Description:
  */
 public interface ProductImgDao {
+
     /**
      * 通过productId检索该product的所有img
      * @param productId

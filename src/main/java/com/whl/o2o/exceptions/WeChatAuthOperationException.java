@@ -7,10 +7,9 @@ package com.whl.o2o.exceptions;
  * @Description:
  */
 public class WeChatAuthOperationException extends RuntimeException{
-
     private static final long serialVersionUID = -7336960777793411752L;
 
     public WeChatAuthOperationException(String msg){
-        super(msg);//RuntimeException(msg)
+        super(msg);
     }
 }

@@ -46,35 +46,34 @@ public class WeChatAuthServiceImpl implements WeChatAuthService {
             return new WeChatAuthExecution(WeChatAuthStateEnum.NULL_AUTH_INFO);
         }
         try {
-            weChatAuth.setCreateTime(new Date());
-            //如果微信账号里夹带用户信息且用户id为null,则认为该用户第一次通过微信登陆使用平台
+            //如果微信账号里夹带用户信息且用户id为null, 则认为该用户第一次通过微信登陆使用平台
             //自动创建账户
-            if(weChatAuth.getUserInfo() != null && weChatAuth.getUserInfo().getUserId() == null){
+            if (weChatAuth.getUserInfo() != null && weChatAuth.getUserInfo().getUserId() == null) {
                 try {
+                    weChatAuth.setCreateTime(new Date());
                     weChatAuth.getUserInfo().setCreateTime(new Date());
                     weChatAuth.getUserInfo().setUpdateTime(new Date());
                     weChatAuth.getUserInfo().setEnableStatus(1);
                     UserInfo userInfo = weChatAuth.getUserInfo();
                     int effectedNum = userInfoDao.insertUserInfo(userInfo);
                     weChatAuth.setUserInfo(userInfo);
-                    if(effectedNum<=0){
+                    if (effectedNum <= 0) {
                         throw new WeChatAuthOperationException("添加用户信息失败");
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     logger.error("insert userInfo error: " + e.toString());
-                    throw new WeChatAuthOperationException("insert userInfo error "+e.getMessage());
+                    throw new WeChatAuthOperationException("insert userInfo error: " + e.getMessage());
                 }
             }
             int effectedNum = weChatAuthDao.insertWeChatAuth(weChatAuth);
-            if(effectedNum <= 0){
+            if (effectedNum <= 0) {
                 throw new WeChatAuthOperationException("账号创建失败");
-            }else {
-                return new WeChatAuthExecution(WeChatAuthStateEnum.SUCCESS,weChatAuth);
+            } else {
+                return new WeChatAuthExecution(WeChatAuthStateEnum.SUCCESS, weChatAuth);
             }
-        }catch (Exception e){
-            logger.error("insert wechatAuth error: "+e.toString());
-            throw new WeChatAuthOperationException("insert wechatAuth error "+e.getMessage());
+        } catch (Exception e) {
+            logger.error("insert wechatAuth error: " + e.toString());
+            throw new WeChatAuthOperationException("insert wechatAuth error " + e.getMessage());
         }
-
     }
 }

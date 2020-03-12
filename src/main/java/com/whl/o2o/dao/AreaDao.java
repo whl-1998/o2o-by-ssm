@@ -17,5 +17,4 @@ public interface AreaDao {
      * @return
      */
     List<Area> queryArea();
-
 }

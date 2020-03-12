@@ -37,7 +37,7 @@ public class ProductExecution {
     }
 
     //成功的构造器  查询
-    public ProductExecution(ProductStateEnum stateEnum,List<Product> productList){
+    public ProductExecution(ProductStateEnum stateEnum, List<Product> productList){
         this.stateInfo = stateEnum.getStateInfo();
         this.state = stateEnum.getState();
         this.productList = productList;
