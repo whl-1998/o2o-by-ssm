@@ -33,7 +33,7 @@ $(function() {
                         var shop = data.shop;
                         $('#shop-cover-pic').attr('src', shop.shopImg);
                         $('#shop-update-time').html(
-                            new Date(shop.lastEditTime)
+                            new Date(shop.updateTime)
                                 .Format("yyyy-MM-dd"));
                         $('#shop-name').html(shop.shopName);
                         $('#shop-desc').html(shop.shopDesc);
@@ -91,7 +91,7 @@ $(function() {
                         + '</div>' + '</div>' + '</li>' + '</ul>'
                         + '</div>' + '</div>' + '<div class="card-footer">'
                         + '<p class="color-gray">'
-                        + new Date(item.lastEditTime).Format("yyyy-MM-dd")
+                        + new Date(item.updateTime).Format("yyyy-MM-dd")
                         + '更新</p>' + '<span>点击查看</span>' + '</div>'
                         + '</div>';
                 });

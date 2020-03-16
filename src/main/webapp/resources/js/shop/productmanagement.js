@@ -34,7 +34,7 @@ tempHtml += '' + '<div class="row row-product">'
         + item.productName
         + '</div>'
     + '<div class="col-20">'
-        + item.point
+        + item.priority
         + '</div>'
     + '<div class="col-40">'
         + '<a href="#" class="edit" data-id="'
@@ -84,28 +84,28 @@ window.location.href = '/o2o/frontend/productdetail?productId='
 }
 });
 function changeItemStatus(id, enableStatus) {
-// 定义product json对象并添加productId以及状态(上架/下架)
-var product = {};
-product.productId = id;
-product.enableStatus = enableStatus;
-$.confirm('确定么?', function() {
-// 上下架相关商品
-$.ajax({
-url : statusUrl,
-type : 'POST',
-data : {
-productStr : JSON.stringify(product),
-statusChange : true
-},
-dataType : 'json',
-success : function(data) {
-if (data.success) {
-$.toast('操作成功！');
-getList();
-} else {
-$.toast('操作失败！');
-}
-}
+	// 定义product json对象并添加productId以及状态(上架/下架)
+	var product = {};
+	product.productId = id;
+	product.enableStatus = enableStatus;
+	$.confirm('确定么?', function() {
+		// 上下架相关商品
+		$.ajax({
+			url : statusUrl,
+			type : 'POST',
+			data : {
+				productStr : JSON.stringify(product),
+				statusChange : true
+			},
+			dataType : 'json',
+			success : function(data) {
+			if (data.success) {
+			$.toast('操作成功！');
+			getList();
+		} else {
+			$.toast('操作失败！');
+		}
+	}
 });
 });
 }

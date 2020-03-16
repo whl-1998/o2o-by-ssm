@@ -111,7 +111,7 @@
         <where>
             <!--如果传入的shopCondition.shopCategory不为空且该shopCategoryId不为空,就可以按照传入的店铺分类进行查询-->
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
-                and shop.shop_category_id =#{shopCondition.shopCategory.shopCategoryId}
+                and shop.shop_category_id = #{shopCondition.shopCategory.shopCategoryId}
             </if>
             <!-- 搜索出某一个根分类下的所有的子分类的所有店铺-->
             <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.parent != null
@@ -134,12 +134,12 @@
                 and shop.owner_id = #{shopCondition.userInfo.userId}
             </if>
             AND
-            shop.area_id=area.area_id
+            shop.area_id = area.area_id
             AND
             shop.shop_category_id = shop_category.shop_category_id
         </where>
         ORDER BY shop.priority DESC
-        LIMIT #{rowIndex},#{pageSize};
+        LIMIT #{rowIndex}, #{pageSize};
     </select>
 
     <select id="queryShopCount" resultType="int">

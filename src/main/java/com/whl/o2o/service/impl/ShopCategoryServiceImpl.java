@@ -38,7 +38,6 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     private static Logger logger = LoggerFactory.getLogger(ShopCategoryServiceImpl.class);
 
     @Override
-    @Transactional
     public List<ShopCategory> getShopCategoryList(ShopCategory shopCategoryCondition) {
         String key = SHOP_CATEGORY_LIST;
         List<ShopCategory> shopCategoryList;

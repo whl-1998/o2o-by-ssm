@@ -102,7 +102,7 @@ $(function() {
                         + '</div>' + '</div>' + '</li>' + '</ul>'
                         + '</div>' + '</div>' + '<div class="card-footer">'
                         + '<p class="color-gray">'
-                        + new Date(item.lastEditTime).Format("yyyy-MM-dd")
+                        + new Date(item.updateTime).Format("yyyy-MM-dd")
                         + '更新</p>' + '<span>点击查看</span>' + '</div>'
                         + '</div>';
                 });
@@ -141,9 +141,7 @@ $(function() {
     });
 
     // 选择新的店铺类别之后，重置页码，清空原先的店铺列表，按照新的类别去查询
-    $('#shoplist-search-div').on(
-        'click',
-        '.button',
+    $('#shoplist-search-div').on('click', '.button',
         function(e) {
             if (parentId && selectedParent) {// 如果传递过来的是一个父类下的子类
                 shopCategoryId = e.target.dataset.categoryId;
@@ -152,8 +150,7 @@ $(function() {
                     $(e.target).removeClass('button-fill');
                     shopCategoryId = '';
                 } else {
-                    $(e.target).addClass('button-fill').siblings()
-                        .removeClass('button-fill');
+                    $(e.target).addClass('button-fill').siblings().removeClass('button-fill');
                 }
                 // 由于查询条件改变，清空店铺列表再进行查询
                 $('.list-div').empty();
@@ -166,8 +163,7 @@ $(function() {
                     $(e.target).removeClass('button-fill');
                     parentId = '';
                 } else {
-                    $(e.target).addClass('button-fill').siblings()
-                        .removeClass('button-fill');
+                    $(e.target).addClass('button-fill').siblings().removeClass('button-fill');
                 }
                 // 由于查询条件改变，清空店铺列表再进行查询
                 $('.list-div').empty();
@@ -175,7 +171,6 @@ $(function() {
                 pageNum = 1;
                 addItems(pageSize, pageNum);
             }
-
         });
 
     // 需要查询的店铺名字发生变化后，重置页码，清空原先的店铺列表，按照新的名字去查询

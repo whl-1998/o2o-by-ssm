@@ -74,12 +74,8 @@ public class ShopServiceTest extends BaseTest {
     @Test
     public void testModifyShop() throws FileNotFoundException {
         Shop shop = new Shop();
-        shop.setShopId(1L);
-        shop.setShopName("modify");
-        File shopImg = new File("C:\\Users\\WHL\\Desktop\\7335888740ee28a868d78bfc82412c30ce8edf89.jpg");
-        InputStream is = new FileInputStream(shopImg);
-        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),is);
-        ShopExecution shopExecution = shopService.modifyShop(shop,imageHolder);
-        System.out.println("new img des:"+shopExecution.getShop().getShopImg());
+        shop.setShopId(2L);
+        shop.setShopDesc("日料店");
+        shopService.modifyShop(shop, null);
     }
 }

@@ -59,8 +59,11 @@ public class HeadLineServiceImpl implements HeadLineService {
             }
             jedisStrings.set(key, jsonString);
         } else {
-            String jsonString = jedisStrings.get(HEAD_LINE_LIST);
+            String jsonString = jedisStrings.get(key);
             //定义jsonString转化后的Java类型 —— ArrayList<Area>
+            if (jsonString == null) {
+                throw new HeadLineOperationException("无缓存");
+            }
             JavaType javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, HeadLine.class);
             try {
                 //将jsonString转化为上述javaType

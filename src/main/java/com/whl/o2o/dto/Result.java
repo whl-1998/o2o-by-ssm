@@ -1,6 +1,5 @@
 package com.whl.o2o.dto;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author whl
@@ -11,15 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class Result<T> {
     private boolean success;//成功标识
-
     private T data;//返回的数据
-
     private String errorMsg;//错误信息
-
     private int errorCode;
 
     public Result(){
-
     }
 
     //成功的构造器

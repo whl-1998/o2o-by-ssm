@@ -71,28 +71,28 @@ public class WechatLoginController {
             }
         }
         //若auth为空 则创建
-        if(auth == null){
+        if (auth == null) {
             UserInfo userInfo = WechatUtil.getUserInfoFromRequest(user);
             auth = new WeChatAuth();
             auth.setOpenId(openId);
-            if(FRONTEND.equals(roleType)){
+            if (FRONTEND.equals(roleType)) {
                 userInfo.setUserType(1);
-            }else {
+            } else {
                 userInfo.setUserType(2);
             }
             auth.setUserInfo(userInfo);
             WeChatAuthExecution we = weChatAuthService.register(auth);
-            if(we.getState() != WeChatAuthStateEnum.SUCCESS.getState()){
+            if (we.getState() != WeChatAuthStateEnum.SUCCESS.getState()) {
                 return null;
-            }else {
+            } else {
                 userInfo = userInfoService.getUserInfoById(auth.getUserInfo().getUserId());
                 request.getSession().setAttribute("user",userInfo);
             }
         }
         // 若用户点击的是前端展示系统则进入前端展示系统 否则进入店家管理系统
-        if(FRONTEND.equals(roleType)){
+        if (FRONTEND.equals(roleType)) {
             return "frontend/index";
-        }else {
+        } else {
             return "shopadmin/shoplist";
         }
     }

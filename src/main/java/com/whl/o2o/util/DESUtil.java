@@ -41,7 +41,6 @@ public class DESUtil {
 
     /**
      * 获取加密后的信息
-     *
      * @param str
      * @return
      */

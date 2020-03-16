@@ -20,24 +20,24 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping
+@RequestMapping("/frontend")
 public class ProductDetailController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "listproductdetailpageinfo",method = RequestMethod.GET)
+    @RequestMapping(value = "listproductdetailpageinfo", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listProductDetailPageInfo(HttpServletRequest request){
+    private Map<String,Object> listProductDetailPageInfo(HttpServletRequest request) {
         Map<String,Object> modelMap = new HashMap<>();
-        long productId = HttpServletRequestUtil.getLong(request,"productId");
-        Product product = null;
-        if(productId != -1 ){
+        long productId = HttpServletRequestUtil.getLong(request, "productId");
+        Product product;
+        if (productId != -1 ) {
             product = productService.getProductById(productId);
-            modelMap.put("product",product);
-            modelMap.put("success",true);
-        }else {
-            modelMap.put("success",false);
-            modelMap.put("errMsg","empty productId");
+            modelMap.put("product", product);
+            modelMap.put("success", true);
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "empty productId");
         }
         return modelMap;
     }

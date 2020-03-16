@@ -86,9 +86,6 @@ public class ProductDaoTest extends BaseTest {
     public void testBQueryProductList(){
         Product productCondition = new Product();
         List<Product> productList = productDao.queryProductList(productCondition, 0, 5);
-        System.out.println(productDao.queryProductCount(productCondition));
-        productCondition.setProductName("押尾");
-        productList = productDao.queryProductList(productCondition, 0, 5);
     }
 
     @Test

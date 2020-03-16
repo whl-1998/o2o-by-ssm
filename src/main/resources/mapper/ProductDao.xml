@@ -56,7 +56,7 @@
                 and shop_id = #{productCondition.shop.shopId}
             </if>
             <if test="productCondition.productCategory != null and productCondition.productCategory.productCategoryId != null">
-                and product_category_id = #{productCategory.productCategoryId}
+                and product_category_id = #{productCondition.productCategory.productCategoryId}
             </if>
             <if test="productCondition.productName != null">
                 and product_name like '%${productCondition.productName}%'
@@ -66,7 +66,7 @@
             </if>
         </where>
         order by priority desc
-        limit #{rowIndex},#{pageSize};
+        limit #{rowIndex}, #{pageSize}
     </select>
 
     <select id="queryProductCount" resultType="int">
@@ -76,7 +76,7 @@
                 and shop_id = #{productCondition.shop.shopId}
             </if>
             <if test="productCondition.productCategory != null and productCondition.productCategory.productCategoryId != null">
-                and product_category_id = #{productCategory.productCategoryId}
+                and product_category_id = #{productCondition.productCategory.productCategoryId}
             </if>
             <if test="productCondition.productName != null">
                 and product_name like '%${productCondition.productName}%'

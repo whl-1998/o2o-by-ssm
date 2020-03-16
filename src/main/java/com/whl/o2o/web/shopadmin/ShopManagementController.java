@@ -240,7 +240,6 @@ public class ShopManagementController {
     private Map<String,Object> getShopList(HttpServletRequest request) {
         Map<String,Object> modelMap = new HashMap<>();
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute("user");
-        userInfo.setUserId(1L);
         try {
             Shop shopCondition = new Shop();
             shopCondition.setUserInfo(userInfo);
@@ -249,7 +248,7 @@ public class ShopManagementController {
             request.getSession().setAttribute("shopList", shopExecution.getShopList());
             modelMap.put("user", userInfo);
             modelMap.put("success", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", "userId为空");
         }

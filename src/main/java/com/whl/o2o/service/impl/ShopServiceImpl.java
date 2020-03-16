@@ -84,7 +84,7 @@ public class ShopServiceImpl implements ShopService {
         }
         try {
             //当修改店铺传入新的图片时,需要将旧的图片删除
-            if (imageHolder.getImage() != null && imageHolder.getImageName() != null && !"".equals(imageHolder.getImageName())) {
+            if (imageHolder != null && imageHolder.getImage() != null && imageHolder.getImageName() != null && !"".equals(imageHolder.getImageName())) {
                 Shop tempShop = shopDao.queryByShopId(shop.getShopId());
                 if (tempShop.getShopImg() != null) {
                     ImageUtil.deleteFileOrPath(tempShop.getShopImg());

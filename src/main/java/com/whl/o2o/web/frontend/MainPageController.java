@@ -35,32 +35,32 @@ public class MainPageController {
      * 初始化前端展示系统的主页信息,包括获取一级店铺类别列表以及头条列表
      * @return
      */
-    @RequestMapping(value = "/listmainpageinfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/listmainpageinfo", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listMainPageInfo(){
+    private Map<String,Object> listMainPageInfo() {
         Map<String,Object> modelMap = new HashMap<>();
-        List<ShopCategory> shopCategoryList = new ArrayList<>();
+        List<ShopCategory> shopCategoryList;
         try {
             //获取一级店铺类别列表(parent为空的shopCategory)
             shopCategoryList = shopCategoryService.getShopCategoryList(null);
-            modelMap.put("shopCategoryList",shopCategoryList);
-        }catch (Exception e){
+            modelMap.put("shopCategoryList", shopCategoryList);
+        } catch (Exception e) {
             modelMap.put("success",false);
             modelMap.put("errMsg",e.getMessage());
             return modelMap;
         }
-        List<HeadLine> headLineList = new ArrayList<>();
+        List<HeadLine> headLineList;
         try {
             //获取状态为可用(1)的头条列表
             HeadLine headLineCondition = new HeadLine();
             headLineCondition.setEnableStatus(1);
             headLineList = headLineService.getHeadLineList(headLineCondition);
-            modelMap.put("headLineList",headLineList);
-        }catch (Exception e){
-            modelMap.put("success",false);
-            modelMap.put("errMsg",e.getMessage());
+            modelMap.put("headLineList", headLineList);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
         }
-        modelMap.put("success",true);
+        modelMap.put("success", true);
         return modelMap;
     }
 }

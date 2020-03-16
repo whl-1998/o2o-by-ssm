@@ -79,7 +79,6 @@ public class ShopDaoTest extends BaseTest {
         Shop shopCondition = new Shop();
         ShopCategory shopCategoryChild = new ShopCategory();
         ShopCategory shopCategoryParent = new ShopCategory();
-        shopCategoryParent.setShopCategoryId(2L);
         shopCategoryChild.setParent(shopCategoryParent);
         shopCondition.setShopCategory(shopCategoryChild);
         //从第0行开始查询返回5条数据

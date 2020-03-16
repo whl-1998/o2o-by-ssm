@@ -14,7 +14,7 @@ public interface ProductDao {
      * @param pageSize 返回条数
      * @return
      */
-    List<Product> queryProductList(@Param("productCondition") Product productCondition, @Param("rowIndex") Integer rowIndex, @Param("pageSize") Integer pageSize);
+    List<Product> queryProductList(@Param("productCondition") Product productCondition, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
 
     /**
      * 满足productCondition条件的商品总数

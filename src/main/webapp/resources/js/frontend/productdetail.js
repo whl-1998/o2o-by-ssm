@@ -15,7 +15,7 @@ $(function() {
             $('#product-img').attr('src', product.imgAddr);
             // 商品更新时间
             $('#product-time').text(
-                new Date(product.lastEditTime).Format("yyyy-MM-dd"));
+                new Date(product.updateTime).Format("yyyy-MM-dd"));
             if (product.point != undefined) {
                 $('#product-point').text('购买可得' + product.point + '积分');
             }

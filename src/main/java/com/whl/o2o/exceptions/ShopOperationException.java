@@ -8,8 +8,6 @@ package com.whl.o2o.exceptions;
  * @Description:
  */
 public class ShopOperationException extends RuntimeException {
-    private static final long serialVersionUID = 579561171276230897L;
-
     public ShopOperationException(String msg){
         super(msg);
     }

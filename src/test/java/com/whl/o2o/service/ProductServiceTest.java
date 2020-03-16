@@ -42,7 +42,6 @@ public class ProductServiceTest extends BaseTest {
         ProductCategory productCategory = new ProductCategory();
         productCategory.setProductCategoryId(3L);
 
-
         Product product1 = new Product();
         product1.setShop(shop);
         product1.setProductCategory(productCategory);
@@ -98,4 +97,8 @@ public class ProductServiceTest extends BaseTest {
         assertEquals(ProductStateEnum.SUCCESS.getState(),productExecution.getState());
     }
 
+    @Test
+    public void testProductList() {
+        productService.getProductList(new Product(), 0, 5);
+    }
 }
