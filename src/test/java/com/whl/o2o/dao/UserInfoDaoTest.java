@@ -23,7 +23,7 @@ public class UserInfoDaoTest extends BaseTest {
     @Test
     public void testAInsertUserInfo(){
         UserInfo userInfo = new UserInfo();
-        userInfo.setName("whlAJ");
+        userInfo.setUsername("whlAJ");
         userInfo.setCreateTime(new Date());
         userInfo.setEmail("313576743@qq.com");
         userInfo.setEnableStatus(1);
@@ -38,6 +38,6 @@ public class UserInfoDaoTest extends BaseTest {
     public void testBQueryUserInfoById(){
         long userId = 2L;
         UserInfo userInfo = userInfoDao.queryUserInfoById(userId);
-        System.out.println(userInfo.getName());
+        System.out.println(userInfo.getUsername());
     }
 }

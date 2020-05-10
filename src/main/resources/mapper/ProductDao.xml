@@ -14,6 +14,7 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="enable_status" property="enableStatus" />
+        <result column="point" property="point" />
         <association property="productCategory" column="product_category_id"
                      javaType="com.whl.o2o.entity.ProductCategory">
             <id column="product_category_id" property="productCategoryId" />
@@ -45,6 +46,7 @@
         normal_price,
         promotion_price,
         priority,
+        point,
         create_time,
         update_time,
         enable_status,
@@ -93,12 +95,12 @@
 		tb_product(product_name,product_desc,img_addr,
 		normal_price,promotion_price,priority,create_time,
 		update_time,enable_status,product_category_id,
-		shop_id)
+		point, shop_id)
 		VALUES
 		(#{productName},#{productDesc},#{imgAddr},
 		#{normalPrice},#{promotionPrice},#{priority},#{createTime},
 		#{updateTime},#{enableStatus},#{productCategory.productCategoryId},
-		#{shop.shopId})
+		#{point}, #{shop.shopId})
 	</insert>
 
     <update id="updateProduct" parameterType="com.whl.o2o.entity.Product" keyProperty="product_id" useGeneratedKeys="true">
@@ -112,6 +114,7 @@
           <if test="priority != null">priority = #{priority},</if>
           <if test="updateTime != null">update_time = #{updateTime},</if>
           <if test="enableStatus != null">enable_status = #{enableStatus},</if>
+          <if test="point != null">point = #{point},</if>
           <if test="productCategory != null and productCategory.productCategoryId != null">
               product_category_id = #{productCategory.productCategoryId},
           </if>
@@ -129,6 +132,7 @@
       product.normal_price,
       product.promotion_price,
       product.priority,
+      product.point,
       product.create_time,
       product.update_time,
       product.enable_status,

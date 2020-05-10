@@ -111,7 +111,7 @@ public class WechatUtil {
      */
     public static UserInfo getUserInfoFromRequest(WechatUser user){
         UserInfo userInfo = new UserInfo();
-        userInfo.setName(user.getNickName());
+        userInfo.setUsername(user.getNickName());
         userInfo.setGender(user.getSex()+"");
         userInfo.setProfileImg(user.getHeadimgurl());
         userInfo.setEnableStatus(1);

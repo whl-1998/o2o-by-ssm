@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/frontend")
-public class MainPageController {
+public class    MainPageController {
 
     @Autowired
     private ShopCategoryService shopCategoryService;

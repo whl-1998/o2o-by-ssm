@@ -21,40 +21,35 @@ $(function() {
 
     // 获取需要编辑的商品的商品信息，并赋值给表单
     function getInfo(id) {
-        $
-            .getJSON(
-                infoUrl,
-                function(data) {
-                    if (data.success) {
-                        // 从返回的JSON当中获取product对象的信息，并赋值给表单
-                        var product = data.product;
-                        $('#product-name').val(product.productName);
-                        $('#product-desc').val(product.productDesc);
-                        $('#priority').val(product.priority);
-
-                        $('#normal-price').val(product.normalPrice);
-                        $('#promotion-price').val(
-                            product.promotionPrice);
-                        // 获取原本的商品类别以及该店铺的所有商品类别列表
-                        var optionHtml = '';
-                        var optionArr = data.productCategoryList;
-                        var optionSelected = product.productCategory.productCategoryId;
-                        // 生成前端的HTML商品类别列表，并默认选择编辑前的商品类别
-                        optionArr
-                            .map(function(item, index) {
-                                var isSelect = optionSelected === item.productCategoryId ? 'selected'
-                                    : '';
-                                optionHtml += '<option data-value="'
-                                    + item.productCategoryId
-                                    + '"'
-                                    + isSelect
-                                    + '>'
-                                    + item.productCategoryName
-                                    + '</option>';
-                            });
-                        $('#category').html(optionHtml);
-                    }
-                });
+        $.getJSON(infoUrl, function(data) {
+            if (data.success) {
+                // 从返回的JSON当中获取product对象的信息，并赋值给表单
+                var product = data.product;
+                $('#product-name').val(product.productName);
+                $('#product-desc').val(product.productDesc);
+                $('#priority').val(product.priority);
+                $('#normal-price').val(product.normalPrice);
+                $('#promotion-price').val(product.promotionPrice);
+                // 获取原本的商品类别以及该店铺的所有商品类别列表
+                var optionHtml = '';
+                var optionArr = data.productCategoryList;
+                var optionSelected = product.productCategory.productCategoryId;
+                // 生成前端的HTML商品类别列表，并默认选择编辑前的商品类别
+                optionArr
+                    .map(function(item, index) {
+                        var isSelect = optionSelected === item.productCategoryId ? 'selected'
+                            : '';
+                        optionHtml += '<option data-value="'
+                            + item.productCategoryId
+                            + '"'
+                            + isSelect
+                            + '>'
+                            + item.productCategoryName
+                            + '</option>';
+                    });
+                $('#category').html(optionHtml);
+            }
+        });
     }
 
     // 为商品添加操作提供该店铺下的所有商品类别列表

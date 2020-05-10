@@ -38,6 +38,6 @@ public class WeChatAuthDaoTest extends BaseTest {
     @Test
     public void testBQueryWeChatAuth(){
         WeChatAuth weChatAuth = weChatAuthDao.queryWeChatInfoByOpenId("ceshiopenId");
-        System.out.println(weChatAuth.getUserInfo().getName());
+        System.out.println(weChatAuth.getUserInfo().getUsername());
     }
 }
